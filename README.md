@@ -1,7 +1,7 @@
 json-join
 =========
 
-Simple functions that allow you to join two json aray objects together similar to a SQL expression
+Simple functions that allow you to join two json aray objects together inspirted by SQL.
 
 Examples:
 ```
