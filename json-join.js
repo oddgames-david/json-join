@@ -1,3 +1,25 @@
+Array.prototype.Delete = function(id,value)
+{
+
+    var removed = [];
+
+    this.forEach(function(item)
+    {
+
+        if (item.hasOwnProperty(id))
+        {
+            if (item[id] != value)
+            {
+                removed.push(item);
+            }
+        }
+
+    });
+
+    return removed;
+
+}
+
 Array.prototype.Join = function(right,onLeft,onRight,columns,aliases)
 {
 
@@ -6,13 +28,15 @@ Array.prototype.Join = function(right,onLeft,onRight,columns,aliases)
     this.forEach( function(leftElement)
     {
 
+        var pushed = false;
+
+        var currentElement = JSON.parse(JSON.stringify(leftElement));
+
         right.forEach( function (rightElement)
         {
 
             if (leftElement[onLeft] == rightElement[onRight])
             {
-
-                var currentElement = JSON.parse(JSON.stringify(leftElement));
 
                 var columnCount = 0;
 
@@ -35,9 +59,15 @@ Array.prototype.Join = function(right,onLeft,onRight,columns,aliases)
                 });
 
                 joined.push(currentElement);
+                pushed = true;
             }
 
         });
+
+        if (!pushed)
+        {
+            joined.push(currentElement);
+        }
 
     });
 
@@ -53,13 +83,13 @@ Array.prototype.Embed = function(right,field,onLeft,onRight,child)
     this.forEach( function(leftElement)
     {
 
+        var currentElement = JSON.parse(JSON.stringify(leftElement));
+
         right.forEach( function (rightElement)
         {
 
             if (leftElement[onLeft] == rightElement[onRight])
             {
-
-                var currentElement = JSON.parse(JSON.stringify(leftElement));
 
                 var columnCount = 0;
 
@@ -70,10 +100,11 @@ Array.prototype.Embed = function(right,field,onLeft,onRight,child)
 
                 currentElement[field].push(JSON.parse(JSON.stringify(rightElement)));
 
-                embed.push(currentElement);
             }
 
         });
+
+        embed.push(currentElement);
 
     });
 
